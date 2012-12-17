@@ -24,6 +24,10 @@
 
 - (BOOL)containsURL;
 
+- (BOOL)containsURLIncludingSchemeless;
+
 - (NSArray *)componentsByDetectedURLs;
+
+- (NSArray *)componentsByDetectedURLsIncludingSchemeless;
 
 @end

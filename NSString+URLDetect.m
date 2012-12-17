@@ -47,6 +47,33 @@
 			return YES;
 		}
 	}
+	
+	return NO;
+}
+
+// ---------------------------------------------------------------------
+#pragma mark -
+
+- (BOOL)containsURLIncludingSchemeless
+{
+	NSError *error;
+	NSDataDetector *detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:&error];
+	
+	if (error != nil)
+	{
+		return NO;
+	}
+	
+	NSArray *matches = [detector matchesInString:self options:kNilOptions range:NSMakeRange(0, self.length)];
+	
+	for (NSTextCheckingResult *match in matches)
+	{
+		if ([match.URL.scheme isEqualToString:@"http"] || [match.URL.scheme isEqualToString:@"https"])
+		{
+			return YES;
+		}
+	}
+	
 	return NO;
 }
 
@@ -77,8 +104,28 @@
 	
 	return urls;
 }
+
+// ---------------------------------------------------------------------
+#pragma mark -
+
+- (NSArray *)componentsByDetectedURLsIncludingSchemeless
+{
+	NSError *error;
+	NSMutableArray *urls = [[NSMutableArray alloc] init];
+	NSDataDetector *detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:&error];
+	
+	if (error != nil)
+	{
+		return urls;
+	}
+	
+	NSArray *matches = [detector matchesInString:self options:kNilOptions range:NSMakeRange(0, self.length)];
+	
+	for (NSTextCheckingResult *match in matches)
+	{
+		if ([match.URL.scheme isEqualToString:@"http"] || [match.URL.scheme isEqualToString:@"https"])
 		{
-			[urls addObject:url];
+			[urls addObject:match.URL];
 		}
 	}
 	
