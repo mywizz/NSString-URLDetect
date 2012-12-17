@@ -41,9 +41,8 @@
 
 	for (NSTextCheckingResult *match in matches)
 	{
-		NSString *url = match.URL.absoluteString;
-		NSRange range = [self rangeOfString:url];
-		if ((range.location != NSNotFound) && ([url.lowercaseString hasPrefix:@"http://"] || [url.lowercaseString hasPrefix:@"https://"]))
+		NSRange range = [self rangeOfString:match.URL.absoluteString];
+		if ((range.location != NSNotFound) && ([match.URL.scheme isEqualToString:@"http"] || [match.URL.scheme isEqualToString:@"https"]))
 		{
 			return YES;
 		}
@@ -69,9 +68,15 @@
 
 	for (NSTextCheckingResult *match in matches) 
 	{
-		NSString *url = match.URL.absoluteString;
-		NSRange range = [self rangeOfString:url];
-		if ((range.location != NSNotFound) && ([url.lowercaseString hasPrefix:@"http://"] || [url.lowercaseString hasPrefix:@"https://"]))
+		NSRange range = [self rangeOfString:match.URL.absoluteString];
+		if ((range.location != NSNotFound) && ([match.URL.scheme isEqualToString:@"http"] || [match.URL.scheme isEqualToString:@"https"]))
+		{
+			[urls addObject:match.URL];
+		}
+	}
+	
+	return urls;
+}
 		{
 			[urls addObject:url];
 		}
