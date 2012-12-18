@@ -6,9 +6,13 @@ NSString Category for detect URL (which starts with `http://` or `https://`).
 
 	NSString *text = @"Visit http://github.com and www.facebook.com";
 
-	BOOL hasURL = [text containsURL]; // YES
+	BOOL hasURL = [text containsURL]; // YES 
 	
-	NSArray *urls = [text componentsByDetectedURLs]; // returns ("http://github.com")
+	NSArray *urls = [text componentsByDetectedURLs];
+	for (NSURL *url in urls)
+	{
+		// Do something with url...
+	}
 	
 
 ## License
